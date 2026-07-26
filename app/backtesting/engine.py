@@ -1,6 +1,7 @@
 from app.trading.engine import SignalEngine
 from .trades import BacktestTrade
 from .metrics import calculate_metrics
+from .risk import calculate_levels
 
 
 class BacktestEngine:
@@ -20,12 +21,20 @@ class BacktestEngine:
 
         if signal.direction.value != "NO_TRADE" and candles:
             entry = candles[-1].close
+            stop_loss, take_profit = calculate_levels(
+                entry,
+                signal.direction.value,
+            )
+
             trades.append(
                 BacktestTrade(
                     direction=signal.direction.value,
                     entry=entry,
                     exit=entry,
+                    stop_loss=stop_loss,
+                    take_profit=take_profit,
                     profit=0,
+                    result="OPEN",
                 )
             )
 
