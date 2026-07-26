@@ -7,6 +7,9 @@ from .parameters import (
     RSI_OVERSOLD_VALUES,
     RSI_OVERBOUGHT_VALUES,
     MACD_VALUES,
+    RSI_WEIGHT_VALUES,
+    MACD_WEIGHT_VALUES,
+    ADX_WEIGHT_VALUES,
 )
 
 
@@ -19,6 +22,9 @@ def generate_parameter_grid():
         RSI_OVERSOLD_VALUES,
         RSI_OVERBOUGHT_VALUES,
         MACD_VALUES,
+        RSI_WEIGHT_VALUES,
+        MACD_WEIGHT_VALUES,
+        ADX_WEIGHT_VALUES,
     ):
         yield {
             "ema_fast": values[0],
@@ -27,4 +33,7 @@ def generate_parameter_grid():
             "rsi_oversold": values[3],
             "rsi_overbought": values[4],
             "macd": values[5],
+            "rsi_weight": values[6],
+            "macd_weight": values[7],
+            "adx_weight": values[8],
         }
