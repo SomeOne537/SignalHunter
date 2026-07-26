@@ -11,3 +11,9 @@ class IndicatorSnapshot:
     macd: float | None = None
     atr: float | None = None
     volatility: float | None = None
+
+    adx: float | None = None
+    bollinger_upper: float | None = None
+    bollinger_middle: float | None = None
+    bollinger_lower: float | None = None
+    stoch_rsi: float | None = None
