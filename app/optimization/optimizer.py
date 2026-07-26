@@ -21,6 +21,7 @@ class StrategyOptimizer:
             pair,
             timeframe,
             candles,
+            parameters=parameters,
         )
 
         metrics = result["metrics"]
