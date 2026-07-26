@@ -1,4 +1,7 @@
-def calculate_metrics(trades):
+from .analytics import calculate_drawdown, calculate_recovery_factor
+
+
+def calculate_metrics(trades, equity_curve=None):
     """Calculate backtest performance statistics."""
     if not trades:
         return {
@@ -7,11 +10,14 @@ def calculate_metrics(trades):
             "profit": 0,
             "profit_factor": 0,
             "drawdown": 0,
+            "recovery_factor": 0,
         }
 
     wins = [trade for trade in trades if trade.profit > 0]
     losses = [abs(trade.profit) for trade in trades if trade.profit < 0]
     profit = sum(trade.profit for trade in trades)
+
+    drawdown = calculate_drawdown(equity_curve or [])
 
     return {
         "trades": len(trades),
@@ -20,5 +26,9 @@ def calculate_metrics(trades):
         "profit_factor": round(
             sum(w.profit for w in wins) / sum(losses), 2
         ) if losses else 0,
-        "drawdown": 0,
+        "drawdown": drawdown,
+        "recovery_factor": calculate_recovery_factor(
+            profit,
+            drawdown,
+        ),
     }
