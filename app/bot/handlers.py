@@ -2,7 +2,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 from .keyboards import pairs_keyboard, timeframe_keyboard
-from app.market.provider import MockMarketProvider
+from app.market.factory import get_market_provider
 from app.trading.engine import SignalEngine
 from app.output.formatter import format_signal
 
@@ -37,7 +37,7 @@ async def timeframe_selected(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
     await update.message.reply_text(f"🔎 Анализирую {pair} {timeframe}...")
 
-    provider = MockMarketProvider()
+    provider = get_market_provider()
     candles = provider.get_candles(pair, timeframe)
 
     engine = SignalEngine()
