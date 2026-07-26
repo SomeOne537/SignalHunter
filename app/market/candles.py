@@ -1,12 +1,12 @@
-from dataclasses import dataclass
-from datetime import datetime
+from .models import Candle
 
 
-@dataclass
-class Candle:
-    time: datetime
-    open: float
-    high: float
-    low: float
-    close: float
-    volume: float
+class CandleSeries:
+    def __init__(self, candles: list[Candle]):
+        self.candles = candles
+
+    def closes(self) -> list[float]:
+        return [candle.close for candle in self.candles]
+
+    def latest(self) -> Candle | None:
+        return self.candles[-1] if self.candles else None
