@@ -1,4 +1,5 @@
 from .results import OptimizationResult
+from .grid import generate_parameter_grid
 
 
 class StrategyOptimizer:
@@ -31,4 +32,24 @@ class StrategyOptimizer:
             profit_factor=metrics.get("profit_factor", 0),
             drawdown=metrics.get("drawdown", 0),
             score=self.calculate_score(metrics),
+        )
+
+    def optimize(self, pair, timeframe, candles):
+        """Run grid search and return best configuration."""
+        results = []
+
+        for parameters in generate_parameter_grid():
+            results.append(
+                self.evaluate(
+                    parameters,
+                    pair,
+                    timeframe,
+                    candles,
+                )
+            )
+
+        return max(
+            results,
+            key=lambda result: result.score,
+            default=None,
         )
