@@ -10,6 +10,10 @@ from .parameters import (
     RSI_WEIGHT_VALUES,
     MACD_WEIGHT_VALUES,
     ADX_WEIGHT_VALUES,
+    SIGNAL_SCORE_THRESHOLD_VALUES,
+    BUY_CONFIRMATION_WEIGHT_VALUES,
+    SELL_CONFIRMATION_WEIGHT_VALUES,
+    WEAK_SIGNAL_PENALTY_VALUES,
 )
 
 
@@ -25,6 +29,10 @@ def generate_parameter_grid():
         RSI_WEIGHT_VALUES,
         MACD_WEIGHT_VALUES,
         ADX_WEIGHT_VALUES,
+        SIGNAL_SCORE_THRESHOLD_VALUES,
+        BUY_CONFIRMATION_WEIGHT_VALUES,
+        SELL_CONFIRMATION_WEIGHT_VALUES,
+        WEAK_SIGNAL_PENALTY_VALUES,
     ):
         yield {
             "ema_fast": values[0],
@@ -36,4 +44,8 @@ def generate_parameter_grid():
             "rsi_weight": values[6],
             "macd_weight": values[7],
             "adx_weight": values[8],
+            "signal_score_threshold": values[9],
+            "buy_confirmation_weight": values[10],
+            "sell_confirmation_weight": values[11],
+            "weak_signal_penalty": values[12],
         }
