@@ -9,3 +9,8 @@ MACD_VALUES = [
     (12, 26, 9),
     (8, 21, 5),
 ]
+
+# Indicator contribution weights
+RSI_WEIGHT_VALUES = [0.2, 0.3, 0.4]
+MACD_WEIGHT_VALUES = [0.2, 0.3, 0.4]
+ADX_WEIGHT_VALUES = [0.2, 0.3, 0.4]
