@@ -17,3 +17,7 @@ class IndicatorSnapshot:
     bollinger_middle: float | None = None
     bollinger_lower: float | None = None
     stoch_rsi: float | None = None
+
+    volume_strength: float | None = None
+    support_level: float | None = None
+    resistance_level: float | None = None
