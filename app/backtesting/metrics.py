@@ -32,3 +32,16 @@ def calculate_metrics(trades, equity_curve=None):
             drawdown,
         ),
     }
+
+
+def calculate_accuracy(result):
+    """Calculate prediction accuracy from backtest result."""
+    if result.total_signals == 0:
+        return 0.0
+
+    return result.correct_signals / result.total_signals
+
+
+def calculate_win_rate(result):
+    """Return signal success rate."""
+    return calculate_accuracy(result)
