@@ -6,6 +6,8 @@ from .volatility import calculate_volatility
 from .adx import calculate_adx
 from .bollinger import calculate_bollinger
 from .stoch_rsi import calculate_stoch_rsi
+from .volume import calculate_volume_strength
+from .levels import find_support_resistance
 from .snapshot import IndicatorSnapshot
 
 
@@ -21,6 +23,7 @@ class IndicatorCalculator:
         macd_value = calculate_macd(closes)
         rsi_value = calculate_rsi(closes)
         bollinger = calculate_bollinger(closes)
+        levels = find_support_resistance(closes)
 
         return IndicatorSnapshot(
             ema_fast=ema_values["ema20"],
@@ -34,4 +37,7 @@ class IndicatorCalculator:
             bollinger_middle=bollinger["middle"],
             bollinger_lower=bollinger["lower"],
             stoch_rsi=calculate_stoch_rsi([rsi_value]),
+            volume_strength=calculate_volume_strength(candles),
+            support_level=levels["support"],
+            resistance_level=levels["resistance"],
         )
