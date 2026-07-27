@@ -5,7 +5,7 @@ class SignalValidator:
     or execute trades.
     """
 
-    def validate(self, indicators, decision):
+    def validate(self, indicators, decision, current_price=None):
         reasons = []
 
         if decision["direction"] == "NO_TRADE":
@@ -32,19 +32,23 @@ class SignalValidator:
             if indicators.stoch_rsi is not None and indicators.stoch_rsi < 0.2:
                 reasons.append("stoch_rsi_oversold")
 
-        # Price location filters
+        # Bollinger sanity check
         if indicators.bollinger_upper is not None and indicators.bollinger_lower is not None:
-            if decision["direction"] == "BUY" and indicators.bollinger_upper == indicators.bollinger_lower:
+            if indicators.bollinger_upper <= indicators.bollinger_lower:
                 reasons.append("invalid_bollinger_range")
 
-            if decision["direction"] == "SELL" and indicators.bollinger_upper == indicators.bollinger_lower:
-                reasons.append("invalid_bollinger_range")
+        # Support/resistance distance filter.
+        # Applied only when current price is provided by market data layer.
+        if current_price is not None:
+            threshold = current_price * 0.001
 
-        if indicators.resistance_level is not None and decision["direction"] == "BUY":
-            reasons.append("near_resistance")
+            if indicators.resistance_level is not None and decision["direction"] == "BUY":
+                if abs(indicators.resistance_level - current_price) <= threshold:
+                    reasons.append("near_resistance")
 
-        if indicators.support_level is not None and decision["direction"] == "SELL":
-            reasons.append("near_support")
+            if indicators.support_level is not None and decision["direction"] == "SELL":
+                if abs(current_price - indicators.support_level) <= threshold:
+                    reasons.append("near_support")
 
         valid = len(reasons) == 0
 
