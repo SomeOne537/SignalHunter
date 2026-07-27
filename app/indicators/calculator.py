@@ -1,5 +1,5 @@
 from .ema import ema_trend
-from .rsi import calculate_rsi
+from .rsi import calculate_rsi, calculate_rsi_series
 from .macd import calculate_macd
 from .atr import calculate_atr
 from .volatility import calculate_volatility
@@ -22,6 +22,7 @@ class IndicatorCalculator:
         ema_values = ema_trend(closes)
         macd_value = calculate_macd(closes)
         rsi_value = calculate_rsi(closes)
+        rsi_series = calculate_rsi_series(closes)
         bollinger = calculate_bollinger(closes)
         levels = find_support_resistance(closes)
 
@@ -36,7 +37,7 @@ class IndicatorCalculator:
             bollinger_upper=bollinger["upper"],
             bollinger_middle=bollinger["middle"],
             bollinger_lower=bollinger["lower"],
-            stoch_rsi=calculate_stoch_rsi([rsi_value]),
+            stoch_rsi=calculate_stoch_rsi(rsi_series),
             volume_strength=calculate_volume_strength(candles),
             support_level=levels["support"],
             resistance_level=levels["resistance"],
