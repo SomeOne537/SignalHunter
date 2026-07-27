@@ -1,13 +1,14 @@
 """SignalHunter processing pipeline.
 
-Connects market data, indicators, signal generation and monitoring.
+Connects public market data, indicators, signal generation and monitoring.
+SignalHunter does not access user broker accounts or execute trades.
 """
 
 from dataclasses import asdict
 from typing import Optional
 
 from .indicator_engine import IndicatorEngine
-from .market_data import MarketDataProvider
+from .market_data_source import MarketDataSource
 from .signal_engine import SignalEngine
 from .signal_monitor import SignalMonitor
 
@@ -15,7 +16,7 @@ from .signal_monitor import SignalMonitor
 class SignalPipeline:
     def __init__(
         self,
-        market_data: MarketDataProvider,
+        market_data: MarketDataSource,
         monitor: SignalMonitor,
         indicator_engine: Optional[IndicatorEngine] = None,
         signal_engine: Optional[SignalEngine] = None,
