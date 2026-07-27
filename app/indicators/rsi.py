@@ -19,3 +19,15 @@ def calculate_rsi(values: list[float], period: int = 14) -> float:
 
     rs = avg_gain / avg_loss
     return round(100 - (100 / (1 + rs)), 2)
+
+
+def calculate_rsi_series(values: list[float], period: int = 14) -> list[float]:
+    """Calculate RSI values sequence for secondary indicators."""
+    if len(values) <= period:
+        return []
+
+    result = []
+    for index in range(period, len(values)):
+        result.append(calculate_rsi(values[: index + 1], period))
+
+    return result
